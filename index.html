@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Celular com Tela de Bloqueio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .celular {
+      width: 300px;
+      height: 600px;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      background: #000;
+      position: relative;
+    }
+
+    .tela {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease;
+    }
+
+    .bloqueio {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('fundo-login.jpg') no-repeat center/cover;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .hora {
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    .hora h1 {
+      font-size: 48px;
+    }
+
+    .hora p {
+      font-size: 16px;
+    }
+
+    .desbloquear {
+      background: rgba(255,255,255,0.2);
+      border-radius: 30px;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-bottom: 40px;
+    }
+
+    .home {
+      background-color: #121212;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 40px 20px;
+      transform: translateY(100%);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .app {
+      width: 60px;
+      height: 60px;
+      background: #fff;
+      border-radius: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .mostrar-home .home {
+      transform: translateY(0%);
+    }
+
+    .mostrar-home .bloqueio {
+      transform: translateY(-100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="celular" id="celular">
+    <div class="tela bloqueio" id="bloqueio">
+      <div class="hora" id="hora">
+        <h1>10:53</h1>
+        <p>Sunday 13 April</p>
+      </div>
+      <div class="desbloquear" onclick="desbloquear()">Arraste para cima</div>
+    </div>
+
+    <div class="tela home" id="home">
+      <div class="app">Mail</div>
+      <div class="app">Maps</div>
+      <div class="app">Notes</div>
+      <div class="app">Store</div>
+      <div class="app">Camera</div>
+      <div class="app">Photos</div>
+      <div class="app">Clock</div>
+      <div class="app">Weather</div>
+    </div>
+  </div>
+
+  <script>
+    function desbloquear() {
+      document.getElementById('celular').classList.add('mostrar-home');
+    }
+
+    function atualizarHora() {
+      const agora = new Date();
+      const hora = agora.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+      const dia = agora.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+      document.querySelector('#hora h1').textContent = hora;
+      document.querySelector('#hora p').textContent = dia;
+    }
+
+    atualizarHora();
+    setInterval(atualizarHora, 60000);
+  </script>
+</body>
+</html>
